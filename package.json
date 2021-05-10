@@ -1,0 +1,40 @@
+{
+  "name": "coolpc-shop-notification",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsc -w",
+    "build": "tsc",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samslhsieh/coolpc-shop-notification.git"
+  },
+  "keywords": [
+    "coolpc"
+  ],
+  "author": "sam.hsieh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/samslhsieh/coolpc-shop-notification/issues"
+  },
+  "homepage": "https://github.com/samslhsieh/coolpc-shop-notification#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "dotenv": "^9.0.1",
+    "googleapis": "^73.0.0",
+    "moment": "^2.29.1",
+    "parse5": "^6.0.1",
+    "prettier": "^2.2.1",
+    "ramda": "^0.27.1"
+  },
+  "devDependencies": {
+    "@types/node": "^15.0.2",
+    "@types/parse5": "^6.0.0",
+    "@types/ramda": "^0.27.40",
+    "i": "^0.3.6",
+    "npm": "^7.12.0"
+  }
+}
