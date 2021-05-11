@@ -1,34 +1,23 @@
 import * as dotenv from 'dotenv'
 import moment from 'moment'
 import axios from 'axios'
-import parse5 from 'parse5'
 import { GoogleSheets } from "./models/googleSheets";
 
 dotenv.config()
 
 new Promise(async (resolve, reject) => {
-    const data = (await axios.get('https://www.coolpc.com.tw/tw/')).data
+    const data = (await axios.get('https://www.coolpc.com.tw/tw/')).data as string
 
-    const document = parse5.parse(data) as any
+    const pattern = /<a data-post-id="(?<id>\d+)" href=\"(?<url>.+)\" title=\"(?<title>.+)\" class=.+<img.+data-wpfc-original-src=\"(?<img>.+)\" data-wpfc-original-srcset.+\/><\/a>/
+    const patternGlobal = /<a data-post-id="(?<id>\d+)" href=\"(?<url>.+)\" title=\"(?<title>.+)\" class=.+<img.+data-wpfc-original-src=\"(?<img>.+)\" data-wpfc-original-srcset.+\/><\/a>/g
 
-    const body = document.childNodes[1].childNodes[2]
-    const home = body.childNodes
-    const boxedWrapper = home[3].childNodes
-    const wrapper = boxedWrapper[2].childNodes
-    const main = wrapper[5]
-    const section = main.childNodes[1].childNodes[0]
-    const postContent = section.childNodes[1].childNodes[1]
+    const articleElements = data.match(patternGlobal) as any
 
-    const articlesElements = postContent.childNodes[4].childNodes[0].childNodes[0].childNodes[0]
-        .childNodes[1].childNodes[1].childNodes
-        .filter((article:any) => article.nodeName === 'article')
+    const articles = articleElements.map((articleElement: any) => {
+        const a = { ...articleElement.match(pattern).groups }
 
-    const articles = articlesElements.map((article: any) => ({
-        id: article.childNodes[1].childNodes[1].childNodes[1].childNodes[1].attrs[0].value,
-        title: article.childNodes[1].childNodes[1].childNodes[1].childNodes[1].attrs[2].value,
-        url: `https://www.coolpc.com.tw${article.childNodes[1].childNodes[1].childNodes[1].childNodes[1].attrs[1].value}`,
-        img: `https://www.coolpc.com.tw${article.childNodes[1].childNodes[1].childNodes[1].childNodes[1].childNodes[0].attrs[3].value}`
-    }))
+        return { ...a, url: `https://www.coolpc.com.tw${a.url}`, img: `https://www.coolpc.com.tw${a.img}`}
+    })
 
     const sheetsId = process.env.GOOGLE_SPREADSHEETS_ID as string
     const keyPath = process.env.GOOGLE_SPREADSHEETS_KEY_PATH as string

@@ -26,13 +26,11 @@
     "dotenv": "^9.0.1",
     "googleapis": "^73.0.0",
     "moment": "^2.29.1",
-    "parse5": "^6.0.1",
     "prettier": "^2.2.1",
     "ramda": "^0.27.1"
   },
   "devDependencies": {
     "@types/node": "^15.0.2",
-    "@types/parse5": "^6.0.0",
     "@types/ramda": "^0.27.40",
     "i": "^0.3.6",
     "npm": "^7.12.0"
