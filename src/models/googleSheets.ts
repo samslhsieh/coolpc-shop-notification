@@ -1,4 +1,5 @@
 import path from 'path'
+import moment from 'moment'
 import { google, sheets_v4 } from 'googleapis'
 
 export class GoogleSheets {
@@ -25,7 +26,7 @@ export class GoogleSheets {
                 console.log(error)
                 return
             } else {
-                console.log('google spreadsheets connected…')
+                console.log(`${moment().toISOString()} google spreadsheets connected…`)
             }
         })
 
